@@ -34,6 +34,7 @@ public class IVR {
 	    int res = 20;
 	    if (size.equals("big")) res += 5;
 		if (size.equals("regular")) res += 3;
+		if (size.equals("small")) res += 1;
 	    if (toppings.equals("cheese")) res += 1;
 		if (toppings.equals("chicken")) res += 4;
 	    if (toppings.equals("mushrooms")) res += 2;
@@ -167,8 +168,13 @@ public class IVR {
 	    	    	if(!curField.name.startsWith("confirm")){
 		    	    	answer = null;
 		    	    	while(answer == null){
+		    	    		// what the system says
 		    	    		System.out.println(curField.prompt);
+		    	    		// the answer you get from the user
 		    	    		answer = bf.readLine();
+		    	    		
+		    	    		if(answer != null && !curField.options.contains(answer))
+		    	    			answer = null;
 		    	    	}
 		    	    	if(curField.name.equals("size"))
 		    	    		size = answer;
@@ -181,15 +187,25 @@ public class IVR {
 	    	    	}else{   	
 		    	    	String confirm_answer = null;
 		    	    	while(confirm_answer == null){
+		    	    		// what the system confirms with
 		    	    		System.out.println(curField.prompt.replaceAll("<insert_item>", answer));
+		    	    		// the answer you get from the user
 		    	    		confirm_answer = bf.readLine();
 		    	    		if(confirm_answer.toLowerCase().equals("no")){
+		    	    			// get back to the last field
 		    	    			i -= 2;
 		    	    			break;
 		    	    		}
 		    	    	}
 	    	    	}
 	    	    }
+	    	    
+	    	    if(count.equals("one"))
+	    	    	count = "1";
+	    	    if(count.equals("two"))
+	    	    	count = "2";
+	    	    if(count.equals("three"))
+	    	    	count = "3";
 	    	    
 	    	    System.out.println("Fine. Your total is " + price(size, toppings, Integer.parseInt(count), crust) + " pounds. Your order will be ready shortly.");
     	    	

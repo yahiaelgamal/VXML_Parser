@@ -21,8 +21,9 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>big <tag> $='big'; </tag></item>
-            <item>regular <tag> $='regular'; </tag></item>
+            <item>big</item>
+            <item>regular</item>
+            <item>small</item>
           </one-of>
         </rule>
       </grammar>
@@ -53,9 +54,9 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>cheese <tag> $='cheese'; </tag></item>
-            <item>chicken <tag> $='chicken'; </tag></item>
-            <item>mushrooms <tag> $='mushrooms'; </tag></item>
+            <item>cheese</item>
+            <item>chicken</item>
+            <item>mushrooms</item>
           </one-of>
         </rule>
       </grammar>
@@ -68,8 +69,8 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>yes <tag> $=true; </tag></item>
-            <item>no <tag> $=false; </tag></item>
+            <item>yes</item>
+            <item>no</item>
           </one-of>
         </rule>
       </grammar>
@@ -85,9 +86,9 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>pan <tag> $='pan'; </tag></item>
-            <item>thin <tag> $='thin'; </tag></item>
-            <item>thick <tag> $='thick'; </tag></item>
+            <item>pan</item>
+            <item>thin</item>
+            <item>thick</item>
           </one-of>
         </rule>
       </grammar>
@@ -101,8 +102,8 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>yes <tag> $=true; </tag></item>
-            <item>no <tag> $=false; </tag></item>
+            <item>yes</item>
+            <item>no</item>
           </one-of>
         </rule>
       </grammar>
@@ -118,9 +119,9 @@
       <grammar root="ROOT" type="application/srgs+xml">
         <rule id="ROOT">
           <one-of>
-            <item>one <tag> $=1; </tag></item>
-            <item>two <tag> $=2; </tag></item>
-	    <item>three <tag> $=3; </tag></item>
+            <item>one</item>
+            <item>two</item>
+	    	<item>three</item>
           </one-of>
         </rule>
       </grammar>
