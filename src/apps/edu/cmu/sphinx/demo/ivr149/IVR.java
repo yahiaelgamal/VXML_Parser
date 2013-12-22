@@ -32,7 +32,8 @@ public class IVR {
     public String toppings = null;
     public String crust = null;
     public String count = null;
-
+    
+    private ArrayList<Field> fields;
     private Recognizer recognizer;
     private Microphone microphone;
 
@@ -141,10 +142,11 @@ public class IVR {
     }
 
 
+    public void getFieldsFromFile(String fileName) {
+        fields = parseXMLFile(fileName);
+    }
+    
     public void interact(){
-        String fileName = "dialog1.xml";
-        ArrayList<Field> fields = parseXMLFile(fileName);
-
         produceOutput("Welcome to your pizza ordering service!");
 
         String answer = "";
@@ -201,6 +203,7 @@ public class IVR {
 
     public static void main(String[] args) throws IOException {
         IVR instance = new IVR();
+        instance.getFieldsFromFile("dialog1.xml");
         instance.interact();
     }
 }
