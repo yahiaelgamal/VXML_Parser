@@ -134,13 +134,18 @@ public class IVR {
 			return "";
 		}
     }
+    
+    public void produceOutput(String output) {
+        // TODO menisy, put your logic here and use instance variables
+        System.out.println(output);
+    }
 
 
     public void interact(){
         String fileName = "dialog1.xml";
         ArrayList<Field> fields = parseXMLFile(fileName);
 
-        System.out.println("Welcome to your pizza ordering service!");
+        produceOutput("Welcome to your pizza ordering service!");
 
         String answer = "";
 
@@ -150,7 +155,7 @@ public class IVR {
                 answer = null;
                 while (answer == null) {
                     // what the system says
-                    System.out.println(curField.prompt);
+                    produceOutput(curField.prompt);
                     // the answer you get from the user
                     answer = getInput();
 
@@ -169,7 +174,7 @@ public class IVR {
                 String confirm_answer = null;
                 while (confirm_answer == null) {
                     // what the system confirms with
-                    System.out.println(curField.prompt.replaceAll( "<insert_item>", answer));
+                    produceOutput(curField.prompt.replaceAll( "<insert_item>", answer));
                     // the answer you get from the user
                     confirm_answer = getInput();
                     if (confirm_answer.toLowerCase().equals("no")) {
@@ -188,7 +193,7 @@ public class IVR {
         if (count.equals("three"))
             count = "3";
 
-        System.out.println("Fine. Your total is "
+        produceOutput("Fine. Your total is "
                 + price()
                 + " pounds. Your order will be ready shortly.");
 
