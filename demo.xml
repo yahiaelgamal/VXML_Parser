@@ -77,43 +77,20 @@
     <!-- Sphinx-4 (non-JSAPI) demos -->
     <target name="compile_sphinx_demos"
             depends="compile_sphinx_helloworld,
-		     compile_sphinx_hellongram,
-		     compile_sphinx_lattice,
-		     compile_sphinx_classbased,
-		     compile_sphinx_confidence,
-		     compile_sphinx_raw,
-	             compile_jsapi_dialog,
-	             compile_jsapi_jsgf,
-	             compile_zipcity,
-                     compile_sphinx_transcriber,
-		     compile_aligner,
-	             compile_tags,
-    	compile_sphinx_calculator_T12_T5,
-    	compile_sphinx_ivr149"
+								     compile_sphinx_hellongram,
+								     compile_sphinx_lattice,
+								     compile_sphinx_classbased,
+								     compile_sphinx_confidence,
+								     compile_sphinx_raw,
+						         compile_jsapi_dialog,
+						         compile_jsapi_jsgf,
+						         compile_zipcity,
+						         compile_sphinx_transcriber,
+								     compile_aligner,
+							       compile_tags,
+						         compile_sphinx_ivr149"
             description="Compiles Sphinx-4 demos"/>
 
-	<target name="compile_sphinx_calculator_T12_T5">
-	        <mkdir dir="${demo_classes_dir}/edu/cmu/sphinx/demo/calculatorT12T5"/>
-	        <javac debug="true"
-	               listfiles="true"
-	               deprecation="true"
-	               includeAntRuntime="false"
-	               srcdir="${demo_src_dir}"
-	               destdir="${demo_classes_dir}"
-	               includes="edu/cmu/sphinx/demo/calculatorT12T5/**">
-	            <classpath refid="libs"/>
-	        </javac>
-	        <copy file="${demo_src_dir}/edu/cmu/sphinx/demo/calculatorT12T5/calc.gram"
-	              todir="${demo_classes_dir}/edu/cmu/sphinx/demo/calculatorT12T5"/>
-	        <copy file="${demo_src_dir}/edu/cmu/sphinx/demo/calculatorT12T5/calc.config.xml"
-	              todir="${demo_classes_dir}/edu/cmu/sphinx/demo/calculatorT12T5"/>
-	        <mkdir dir="${bin_dir}"/>
-	        <jar destfile="${bin_dir}/Calc.jar"
-	             manifest="${demo_src_dir}/edu/cmu/sphinx/demo/calculatorT12T5/calc.Manifest"
-	             basedir="${demo_classes_dir}"
-	             includes="edu/cmu/sphinx/demo/calculatorT12T5/**"
-	             compress="true"/>
-	    </target>
     <target name="compile_sphinx_helloworld">
         <mkdir dir="${demo_classes_dir}/edu/cmu/sphinx/demo/helloworld"/>
         <javac debug="true"
@@ -137,7 +114,7 @@
              compress="true"/>
     </target>
     
-       <target name="compile_sphinx_ivr149">
+    <target name="compile_sphinx_ivr149">
         <mkdir dir="${demo_classes_dir}/edu/cmu/sphinx/demo/ivr149"/>
         <javac debug="true"
                listfiles="true"
