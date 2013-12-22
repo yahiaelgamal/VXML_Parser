@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<!-- This is a SRGS grammar. -->
+
+<grammar xml:lang="en-US" version="1.0" root="ROOT">
+
+  <!-- This is the root (main) rule of the grammar. -->
+  <rule id="ROOT" scope="public" >
+    <item repeat="1+">
+    <one-of>
+      <item>hi <tag>cmd='greet';</tag></item>
+      <item>i want <tag>cmd='order';</tag></item>
+      <item>i wants <tag>cmd='order';</tag></item>
+      <item>i need <tag>cmd='order';</tag></item>
+      <item>we want <tag>cmd='order';</tag></item>
+      <item>
+        <one-of>
+          <item>a<tag>number=1;</tag></item>
+          <item>two<tag>number=2;</tag></item>
+        </one-of>
+	<item repeat="0-1"><ruleref uri="#big"/><tag>size=$big;</tag></item>
+	<one-of><item>pizza</item><item>pizzas</item></one-of>      
+	<tag>cmd='order';</tag>
+      </item>
+      <item><item repeat="0-1">with</item>
+        <one-of>
+          <item>cheese <tag>toppings='cheese';</tag></item>
+          <item>mushrooms <tag>toppings='mushrooms';</tag></item>
+          <item>mushroom <tag>toppings='mushrooms';</tag></item>
+	  <item>chicken <tag>toppings='chicken';</tag></item>
+	  <item>chickens <tag>toppings='chicken';</tag></item>
+        </one-of>
+      </item>
+      <item> <ruleref uri="#big"/> <tag>cmd='order'; size=$big;</tag></item>
+    </one-of>
+    </item>
+  </rule>
+
+
+  <rule id="big" scope="public" >
+    <one-of>
+      <item>big <tag>$='big';</tag></item>
+      <item>regular <tag>$='regular';</tag></item>
+    </one-of>
+  </rule>
+
+
+</grammar>
+

@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Calc example
+ */
+
+grammar hello;
+
+public <test> = ( ONE | TWO);
