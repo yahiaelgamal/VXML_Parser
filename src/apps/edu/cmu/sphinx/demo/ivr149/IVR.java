@@ -28,8 +28,32 @@ import org.w3c.dom.Element;
 import java.io.*;
 
 public class IVR {
+    public String size = null;
+    public String toppings = null;
+    public String crust = null;
+    public String count = null;
 
-    public static int price(String size, String toppings, int count, String crust) {
+    private Recognizer recognizer;
+    private Microphone microphone;
+
+    public IVR(){
+        this(true);
+    }
+
+    public IVR(boolean mic){
+        if(mic) {
+            ConfigurationManager cm;
+            cm = new ConfigurationManager(IVR.class.getResource("ivr.config.xml"));
+
+            this.recognizer = (Recognizer) cm.lookup("recognizer");
+            recognizer.allocate();
+
+            this.microphone = (Microphone) cm.lookup("microphone");
+        }
+    }
+
+    public int price() {
+        int countInt = Integer.parseInt(this.count);
         int res = 20;
         if (size.equals("big")) res += 5;
         if (size.equals("regular")) res += 3;
@@ -39,7 +63,7 @@ public class IVR {
         if (toppings.equals("mushrooms")) res += 2;
         if (crust.equals("pan")) res += 3;
         if (crust.equals("thick")) res += 5;
-        return res*count;
+        return res*countInt;
     }
 
     public static ArrayList<Field> parseXMLFile(String fileName) {
@@ -101,18 +125,23 @@ public class IVR {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public String getInput(){
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        try {
+			return bf.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+    }
+
+
+    public void interact(){
         String fileName = "dialog1.xml";
         ArrayList<Field> fields = parseXMLFile(fileName);
 
-        String size = null;
-        String toppings = null;
-        String crust = null;
-        String count = null;
-
         System.out.println("Welcome to your pizza ordering service!");
 
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";
 
         for (int i = 0; i < fields.size(); i++) {
@@ -123,10 +152,9 @@ public class IVR {
                     // what the system says
                     System.out.println(curField.prompt);
                     // the answer you get from the user
-                    answer = bf.readLine();
+                    answer = getInput();
 
-                    if (answer != null
-                            && !curField.options.contains(answer))
+                    if (answer != null && !curField.options.contains(answer))
                         answer = null;
                 }
                 if (curField.name.equals("size"))
@@ -141,10 +169,9 @@ public class IVR {
                 String confirm_answer = null;
                 while (confirm_answer == null) {
                     // what the system confirms with
-                    System.out.println(curField.prompt.replaceAll(
-                            "<insert_item>", answer));
+                    System.out.println(curField.prompt.replaceAll( "<insert_item>", answer));
                     // the answer you get from the user
-                    confirm_answer = bf.readLine();
+                    confirm_answer = getInput();
                     if (confirm_answer.toLowerCase().equals("no")) {
                         // get back to the last field
                         i -= 2;
@@ -162,8 +189,13 @@ public class IVR {
             count = "3";
 
         System.out.println("Fine. Your total is "
-                + price(size, toppings, Integer.parseInt(count), crust)
+                + price()
                 + " pounds. Your order will be ready shortly.");
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        IVR instance = new IVR();
+        instance.interact();
     }
 }
