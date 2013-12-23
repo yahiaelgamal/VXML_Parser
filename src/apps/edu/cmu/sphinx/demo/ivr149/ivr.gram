@@ -4,6 +4,10 @@
  * JSGF Grammar for Calc example
  */
 
-grammar hello;
+grammar pizza;
 
-public <test> = ( ONE | TWO);
+public <size> = [I want (it | them) ] (big | small);
+public <topping> = [I want it with] (cheese | mushrooms | chicken );
+public <curst> = [I want it ] (pan | thick);
+public <count> = [I want] (one | two | three);
+public <confirm> = (yes | no);

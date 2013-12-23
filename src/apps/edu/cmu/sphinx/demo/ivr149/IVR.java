@@ -40,6 +40,11 @@ public class IVR {
     public IVR(){
         this(true);
     }
+    
+    public void stop() {
+        this.microphone.stopRecording();
+        this.recognizer.deallocate();
+    }
 
     public IVR(boolean mic){
         if(mic) {
@@ -127,13 +132,41 @@ public class IVR {
     }
 
     public String getInput(){
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        try {
-			return bf.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "";
-		}
+//        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+//        try {
+//			return bf.readLine();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return "";
+//		}
+        this.microphone.clear();
+        this.microphone.startRecording();
+
+        System.out.println("Say something to start. Press Ctrl-C to quit.\n");
+        Result result = recognizer.recognize();
+
+        if (result != null) {
+            String resultText = result.getBestFinalResultNoFiller();
+            if(resultText.contains("big"))
+            	return "big";
+            else if(resultText.contains("small"))
+            	return "small";
+            else if(resultText.contains("thick"))
+            	return "thick";
+            else if(resultText.contains("pan"))
+            	return "pan";
+            else if(resultText.contains("cheese"))
+            	return "cheese";
+            else if(resultText.contains("mushrooms"))
+            	return "mushrooms";
+            else if(resultText.contains("chicken"))
+            	return "chicken";
+            else if(resultText.startsWith("I want"))
+            	return resultText.substring(7);
+        	else
+        		return resultText;
+        }else
+        	return "NA";
     }
     
     public void produceOutput(String output) {
@@ -160,6 +193,7 @@ public class IVR {
                     produceOutput(curField.prompt);
                     // the answer you get from the user
                     answer = getInput();
+                    System.out.println(answer);
 
                     if (answer != null && !curField.options.contains(answer))
                         answer = null;
@@ -179,7 +213,8 @@ public class IVR {
                     produceOutput(curField.prompt.replaceAll( "<insert_item>", answer));
                     // the answer you get from the user
                     confirm_answer = getInput();
-                    if (confirm_answer.toLowerCase().equals("no")) {
+                    System.out.println(confirm_answer);
+                    if (!confirm_answer.toLowerCase().equals("yes")) {
                         // get back to the last field
                         i -= 2;
                         break;
@@ -199,6 +234,7 @@ public class IVR {
                 + price()
                 + " pounds. Your order will be ready shortly.");
 
+        this.stop();
     }
 
     public static void main(String[] args) throws IOException {
