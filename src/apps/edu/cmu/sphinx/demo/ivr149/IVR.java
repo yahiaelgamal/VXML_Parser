@@ -24,6 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import com.sun.speech.freetts.*;
 
 import java.io.*;
 
@@ -36,6 +37,7 @@ public class IVR {
     private ArrayList<Field> fields;
     private Recognizer recognizer;
     private Microphone microphone;
+    private Voice voice;
 
     public IVR(){
         this(true);
@@ -53,7 +55,11 @@ public class IVR {
 
             this.recognizer = (Recognizer) cm.lookup("recognizer");
             recognizer.allocate();
-
+            
+            VoiceManager voiceManager = VoiceManager.getInstance();
+            this.voice = voiceManager.getVoice("kevin16");
+            voice.allocate();
+            voice.setDumpUtterance(true);
             this.microphone = (Microphone) cm.lookup("microphone");
         }
     }
@@ -170,7 +176,7 @@ public class IVR {
     }
     
     public void produceOutput(String output) {
-        // TODO menisy, put your logic here and use instance variables
+        voice.speak(output);
         System.out.println(output);
     }
 
@@ -238,7 +244,7 @@ public class IVR {
     }
 
     public static void main(String[] args) throws IOException {
-        IVR instance = new IVR();
+    	IVR instance = new IVR();
         instance.getFieldsFromFile("dialog1.xml");
         instance.interact();
     }
