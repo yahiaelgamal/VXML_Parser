@@ -2,7 +2,22 @@
 
  
 <vxml version="2.0">
-
+  <!-- A function in JavaScript -->
+  <script>
+  function price(size, toppings, count, crust)
+  {
+    var res = 20;
+    if ('big' == size) res += 5;
+	if ('regular' == size) res += 3;
+    if ('cheese' == toppings) res += 1;
+	if ('chicken' == toppings) res += 4;
+    if ('mushrooms' == toppings) res += 2;
+	if ('pan' == crust) res += 3;
+	if ('thick' == crust) res += 5;
+    return res*count;
+  }
+  </script>
+  <!-- -->
 
   <form id="form1">
 	<!-- A block for an initial greeting -->

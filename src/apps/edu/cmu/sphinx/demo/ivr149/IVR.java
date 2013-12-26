@@ -25,6 +25,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import com.sun.speech.freetts.*;
+import javax.script.*;
 
 import java.io.*;
 
@@ -38,6 +39,7 @@ public class IVR {
     private Recognizer recognizer;
     private Microphone microphone;
     private Voice voice;
+    private static String javaScript;
 
     public IVR(){
         this(true);
@@ -64,18 +66,20 @@ public class IVR {
         }
     }
 
-    public int price() {
-        int countInt = Integer.parseInt(this.count);
-        int res = 20;
-        if (size.equals("big")) res += 5;
-        if (size.equals("regular")) res += 3;
-        if (size.equals("small")) res += 1;
-        if (toppings.equals("cheese")) res += 1;
-        if (toppings.equals("chicken")) res += 4;
-        if (toppings.equals("mushrooms")) res += 2;
-        if (crust.equals("pan")) res += 3;
-        if (crust.equals("thick")) res += 5;
-        return res*countInt;
+    public Double price() {
+        ScriptEngineManager factory = new ScriptEngineManager();
+        ScriptEngine engine = factory.getEngineByName("JavaScript");
+        try {
+            engine.eval(javaScript);
+            System.out.println(javaScript);
+            Invocable inv = (Invocable) engine;
+			return (Double)inv.invokeFunction("price", size, toppings, count, crust);
+		}catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			}
+		//return "unkown";
+		return 20.0;
     }
 
     public static ArrayList<Field> parseXMLFile(String fileName) {
@@ -89,7 +93,8 @@ public class IVR {
             dialog.getDocumentElement().normalize();
 
             NodeList nList = dialog.getElementsByTagName("field");
-
+            javaScript = dialog.getElementsByTagName("script").item(0).getFirstChild().getTextContent();
+            
             for (int i = 0; i < nList.getLength(); i++) {
 
                 Node nNode = nList.item(i);
@@ -235,9 +240,9 @@ public class IVR {
             count = "2";
         if (count.equals("three"))
             count = "3";
-
+        
         produceOutput("Fine. Your total is "
-                + price()
+                + price().intValue()
                 + " pounds. Your order will be ready shortly.");
 
         this.stop();
